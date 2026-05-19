@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة أدوات PDF24 الاحترافية مع التدوير والتعديل</title>
+    
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+</head>
+<body>
+
+<button class="menu-toggle-btn" onclick="toggleMobileMenu()">☰</button>
+
+<div class="container">
+    <div class="header">
+        <h1>📄 أدوات ومحرر PDF24 المطور</h1>
+        <p>تصفح، رتب، عدل، دور الصفحات، وحول ملفاتك بالكامل محلياً وفي ثوانٍ معدودة</p>
+    </div>
+    
+    <div class="tools-grid">
+        <div class="tool-card">
+            <div>
+                <div class="tool-icon">🔀</div>
+                <h3>دمج ملفات PDF</h3>
+                <p>ادمج مستندات PDF متعددة، وتحكم في ترتيب وحذف الملفات المرفوعة.</p>
+            </div>
+            <button class="btn btn-orange" onclick="openModal('merge-modal')">فتح الأداة ←</button>
+        </div>
+
+        <div class="tool-card">
+            <div>
+                <div class="tool-icon">🖼️</div>
+                <h3>تحويل الصور إلى PDF</h3>
+                <p>حول صورك إلى مستند PDF مع ميزة **تدوير الصفحات** وتعديلها بصرياً.</p>
+            </div>
+            <button class="btn btn-success" onclick="openModal('convert-modal')">فتح الأداة ←</button>
+        </div>
+
+        <div class="tool-card">
+            <div>
+                <div class="tool-icon">🔍</div>
+                <h3>قارئ ومعاين الملفات</h3>
+                <p>استعراض وتشغيل فوري ومكبر للفيديوهات، الصور، المستندات والـ PDF.</p>
+            </div>
+            <button class="btn btn-dark" onclick="openModal('viewer-modal')">فتح الأداة ←</button>
+        </div>
+    </div>
+</div>
+
+<div id="merge-modal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal('merge-modal')">×</button>
+        <h2>🔀 أداة دمج ملفات PDF</h2>
+        <div class="upload-zone" onclick="document.getElementById('merge-input').click()">
+            <p>اضغط هنا لتصفح ملفات الـ PDF أو اسحبها إلى هنا</p>
+            <input type="file" id="merge-input" multiple accept=".pdf" onchange="handleFiles(event, 'merge')">
+        </div>
+        <div id="merge-preview" class="preview-box"></div>
+        <div id="merge-status" class="status-message"></div>
+        <button class="btn btn-orange" style="width: auto; display:block; margin:0 auto;" onclick="executeMerge()">ابدأ الدمج والتحميل</button>
+    </div>
+</div>
+
+<div id="convert-modal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal('convert-modal')">×</button>
+        <h2>🖼️ أداة تحويل الصور وتعديلها</h2>
+        <div class="upload-zone" onclick="document.getElementById('convert-input').click()">
+            <p>اضغط هنا لرفع الصور (JPG, PNG)</p>
+            <input type="file" id="convert-input" multiple accept="image/jpeg, image/png" onchange="handleFiles(event, 'convert')">
+        </div>
+        <div id="convert-preview" class="preview-box"></div>
+        <div id="convert-status" class="status-message"></div>
+        <button class="btn btn-success" style="width: auto; display:block; margin:0 auto;" onclick="executeConversion()">توليد مستند PDF النهائي</button>
+    </div>
+</div>
+
+<div id="viewer-modal" class="modal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal('viewer-modal')">×</button>
+        <h2>🔍 قارئ ومشغل الملفات الشامل</h2>
+        <div class="upload-zone" onclick="document.getElementById('viewer-input').click()">
+            <p>اضغط هنا لرفع أي ملف وعرضه وتعديله فوراً</p>
+            <input type="file" id="viewer-input" multiple accept="*/*" onchange="handleFiles(event, 'viewer')">
+        </div>
+        <div id="viewer-preview" class="preview-box"></div>
+    </div>
+</div>
+
+<div id="edit-sub-modal" class="modal" style="z-index: 2000;">
+    <div class="modal-content" style="max-width: 600px;">
+        <button class="close-modal" onclick="closeModal('edit-sub-modal')">×</button>
+        <h2 id="edit-modal-title">⚙️ معاينة وتعديل الملف</h2>
+        <div id="edit-zone-content"></div>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+            <button id="rotate-btn" class="btn btn-orange" style="width:auto; display:none;" onclick="rotateCurrentImage()">🔄 تدوير 90 درجة</button>
+            <button class="btn btn-dark" style="width:auto;" onclick="closeModal('edit-sub-modal')">حفظ وإغلاق المعاينة</button>
+        </div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
