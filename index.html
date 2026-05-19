@@ -3,105 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أدوات PDF24 الاحترافية مع التدوير والتعديل</title>
+    <title>GoodTech Advanced Suite</title>
     
     <link rel="stylesheet" href="styles.css">
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
-<button class="menu-toggle-btn" onclick="toggleMobileMenu()">☰</button>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
 
-<div class="container">
-    <div class="header">
-        <h1>📄 أدوات ومحرر PDF24 المطور</h1>
-        <p>تصفح، رتب، عدل، دور الصفحات، وحول ملفاتك بالكامل محلياً وفي ثوانٍ معدودة</p>
-    </div>
-    
-    <div class="tools-grid">
-        <div class="tool-card">
-            <div>
-                <div class="tool-icon">🔀</div>
-                <h3>دمج ملفات PDF</h3>
-                <p>ادمج مستندات PDF متعددة، وتحكم في ترتيب وحذف الملفات المرفوعة.</p>
+    <div class="sidebar" id="sidebar-panel">
+        <div>
+            <div class="sidebar-brand">
+                <span>⚡ GoodTech Suite</span>
             </div>
-            <button class="btn btn-orange" onclick="openModal('merge-modal')">فتح الأداة ←</button>
+            <ul class="sidebar-menu">
+                <li class="sidebar-item active" onclick="switchTab('dashboard-tab', this)">
+                    <span>🏠</span> <span class="lang-text" data-ar="اللوحة الرئيسية" data-en="Dashboard">اللوحة الرئيسية</span>
+                </li>
+                <li class="sidebar-item" onclick="switchTab('pdf-tab', this)">
+                    <span>🔀</span> <span class="lang-text" data-ar="أدوات الـ PDF" data-en="PDF Tools">أدوات الـ PDF</span>
+                </li>
+                <li class="sidebar-item" onclick="switchTab('qr-tab', this)">
+                    <span>🔍</span> <span class="lang-text" data-ar="أدوات الـ QR Code" data-en="QR Code Tools">أدوات الـ QR Code</span>
+                </li>
+                <li class="sidebar-item" onclick="switchTab('viewer-tab', this)">
+                    <span>👁️</span> <span class="lang-text" data-ar="المعاين الشامل" data-en="Universal Viewer">المعاين الشامل</span>
+                </li>
+            </ul>
         </div>
+        <button class="lang-switcher" onclick="toggleLanguage()">
+            🌐 <span>English</span>
+        </button>
+    </div>
 
-        <div class="tool-card">
-            <div>
-                <div class="tool-icon">🖼️</div>
-                <h3>تحويل الصور إلى PDF</h3>
-                <p>حول صورك إلى مستند PDF مع ميزة **تدوير الصفحات** وتعديلها بصرياً.</p>
+    <div class="main-content">
+        <div class="header-section">
+            <div class="header-title">
+                <h1 id="main-title" class="lang-text" data-ar="منصة GoodTech المتقدمة" data-en="GoodTech Advanced Suite">منصة GoodTech المتقدمة</h1>
+                <p id="main-subtitle" class="lang-text" data-ar="الجيل الجديد من أدوات إدارة المستندات والـ QR محلياً بالكامل" data-en="The next-gen offline client for document processing and QR tools.">الجيل الجديد من أدوات إدارة المستندات والـ QR محلياً بالكامل</p>
             </div>
-            <button class="btn btn-success" onclick="openModal('convert-modal')">فتح الأداة ←</button>
         </div>
 
-        <div class="tool-card">
-            <div>
-                <div class="tool-icon">🔍</div>
-                <h3>قارئ ومعاين الملفات</h3>
-                <p>استعراض وتشغيل فوري ومكبر للفيديوهات، الصور، المستندات والـ PDF.</p>
+        <div id="dashboard-tab" class="tab-content active">
+            <div class="tools-grid">
+                <div class="dashboard-card">
+                    <div>
+                        <div class="card-icon">📄</div>
+                        <h3 class="lang-text" data-ar="تعديل وفرز صفحات PDF" data-en="PDF Page Editor & Merger">تعديل وفرز صفحات PDF</h3>
+                        <p class="lang-text" data-ar="فكك مستندات الـ PDF المرفوعة وعاين صفحاتها كصور منفصلة، رتبها بالسحب والإفلات، دور صفحات معينة أو احذفها لبناء ملف جديد كلياً." data-en="Deconstruct PDF files into separate preview pages. Drag to reorder, rotate specific pages, or delete ones you don't need to generate a perfect file.">فكك مستندات الـ PDF المرفوعة وعاين صفحاتها كصور منفصلة، رتبها بالسحب والإفلات، دور صفحات معينة أو احذفها لبناء ملف جديد كلياً.</p>
+                    </div>
+                    <button class="btn" onclick="switchTabByIcon(1)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                </div>
+                <div class="dashboard-card">
+                    <div>
+                        <div class="card-icon">📲</div>
+                        <h3 class="lang-text" data-ar="صانع وقارئ الـ QR Code" data-en="QR Code Scanner & Creator">صانع وقارئ الـ QR Code</h3>
+                        <p class="lang-text" data-ar="أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً." data-en="Generate production-ready QR codes dynamically or use your device camera / image uploads to scan, parse and read any QR code target instantly.">أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً.</p>
+                    </div>
+                    <button class="btn btn-success" onclick="switchTabByIcon(2)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                </div>
+                <div class="dashboard-card">
+                    <div>
+                        <div class="card-icon">👁️</div>
+                        <h3 class="lang-text" data-ar="المعاين والـ Reader الشامل" data-en="Universal Viewer & Reader">المعاين والـ Reader الشامل</h3>
+                        <p class="lang-text" data-ar="منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها." data-en="A centralized inspector workspace that lets you read PDFs inline, stream videos/audio, review source codes and render graphics fully client-side.">منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                </div>
             </div>
-            <button class="btn btn-dark" onclick="openModal('viewer-modal')">فتح الأداة ←</button>
+        </div>
+
+        <div id="pdf-tab" class="tab-content">
+            <div class="tools-grid">
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <h2 class="lang-text" data-ar="🔀 تفكيك وتعديل صفحات الـ PDF والدمج" data-en="🔀 Deconstruct, Edit & Merge PDF Pages">🔀 تفكيك وتعديل صفحات الـ PDF والدمج</h2>
+                    <div class="upload-zone" onclick="document.getElementById('merge-input').click()">
+                        <i style="font-size: 2.5rem; margin-bottom: 10px;">📥</i>
+                        <p class="lang-text" data-ar="اسحب وأفلت ملفات الـ PDF هنا أو اضغط للتصفح المتقدم" data-en="Drag & drop PDF documents here or click to browse files">اسحب وأفلت ملفات الـ PDF هنا أو اضغط للتصفح المتقدم</p>
+                        <input type="file" id="merge-input" multiple accept=".pdf" onchange="handlePdfUpload(event)">
+                    </div>
+                    <div id="merge-preview" class="preview-box"></div>
+                    <div id="merge-status" class="status-message"></div>
+                    <button class="btn" style="width:250px; align-self: center;" onclick="executeMerge()">
+                        <span class="lang-text" data-ar="توليد وتحميل الملف النهائي" data-en="Compile & Download New PDF">توليد وتحميل الملف النهائي</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="qr-tab" class="tab-content">
+            <div class="qr-container">
+                <div class="qr-panel">
+                    <h3 class="lang-text" data-ar="✨ توليد رمز استجابة سريع جديد" data-en="✨ Create New QR Code">✨ توليد رمز استجابة سريع جديد</h3>
+                    <br>
+                    <div class="form-group">
+                        <label class="lang-text" data-ar="أدخل النص أو الرابط (URL)" data-en="Enter Text or Destination URL">أدخل النص أو الرابط (URL)</label>
+                        <input type="text" id="qr-text-input" class="form-control" placeholder="https://google.com" oninput="generateQRCode()">
+                    </div>
+                    <div id="qr-output-box"></div>
+                    <br>
+                    <button class="btn btn-success" style="width:100%" onclick="downloadQR()">
+                        <span class="lang-text" data-ar="تحميل الرمز كصورة PNG" data-en="Download QR Code Image">تحميل الرمز كصورة PNG</span>
+                    </button>
+                </div>
+
+                <div class="qr-panel">
+                    <h3 class="lang-text" data-ar="📷 مسح وقراءة الـ QR Code" data-en="📷 Scan & Parse QR Code">📷 مسح وقراءة الـ QR Code</h3>
+                    <br>
+                    <div style="display:flex; gap:10px; margin-bottom:15px;">
+                        <button class="btn" style="flex:1" onclick="startScanner()">
+                            <span class="lang-text" data-ar="تشغيل كاميرا الجهاز" data-en="Initialize Camera">تشغيل كاميرا الجهاز</span>
+                        </button>
+                        <button class="btn btn-danger" onclick="stopScanner()">🛑</button>
+                    </div>
+                    <div id="reader-video-container"></div>
+                    
+                    <div style="text-align:center; margin:15px 0; font-weight:bold; color:var(--text-muted);" class="lang-text" data-ar="— أو ارفع صورة الرمز من جهازك —" data-en="— OR Upload QR Image From Device —">— أو ارفع صورة الرمز من جهازك —</div>
+                    
+                    <input type="file" id="qr-file-input" accept="image/*" class="form-control" onchange="scanQrFromFile(event)">
+                    <div id="scanner-result" class="status-message" style="margin-top:20px; word-break: break-all; color: var(--success);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewer-tab" class="tab-content">
+            <div class="dashboard-card" style="width:100%;">
+                <h3 class="lang-text" data-ar="👁️ المعاين الذكي الموحد لجميع الملفات" data-en="👁️ Universal Workspace Inspector">👁️ المعاين الذكي الموحد لجميع الملفات</h3>
+                <div class="upload-zone" onclick="document.getElementById('universal-file-input').click()">
+                    <i style="font-size:2.5rem;">🔍</i>
+                    <p class="lang-text" data-ar="قم برفع أي ملف فوراً (PDF, فيديو، ملف صوتي، كود برمي، صورة) لعرض محتواه الفعلي" data-en="Upload any file type (PDF, Video, Audio, Code source, Graphic) to review inline">قم برفع أي ملف فوراً (PDF, فيديو، ملف صوتي، كود برمي، صورة) لعرض محتواه الفعلي</p>
+                    <input type="file" id="universal-file-input" accept="*/*" onchange="handleUniversalViewer(event)">
+                </div>
+                <div class="viewer-stage" id="viewer-stage-area">
+                    <p class="lang-text" data-ar="شاشة العرض فارغة، بانتظار رفع ملف..." data-en="Viewer engine standby. Please upload a target file.">شاشة العرض فارغة، بانتظار رفع ملف...</p>
+                </div>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="merge-modal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closeModal('merge-modal')">×</button>
-        <h2>🔀 أداة دمج ملفات PDF</h2>
-        <div class="upload-zone" onclick="document.getElementById('merge-input').click()">
-            <p>اضغط هنا لتصفح ملفات الـ PDF أو اسحبها إلى هنا</p>
-            <input type="file" id="merge-input" multiple accept=".pdf" onchange="handleFiles(event, 'merge')">
-        </div>
-        <div id="merge-preview" class="preview-box"></div>
-        <div id="merge-status" class="status-message"></div>
-        <button class="btn btn-orange" style="width: auto; display:block; margin:0 auto;" onclick="executeMerge()">ابدأ الدمج والتحميل</button>
-    </div>
-</div>
-
-<div id="convert-modal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closeModal('convert-modal')">×</button>
-        <h2>🖼️ أداة تحويل الصور وتعديلها</h2>
-        <div class="upload-zone" onclick="document.getElementById('convert-input').click()">
-            <p>اضغط هنا لرفع الصور (JPG, PNG)</p>
-            <input type="file" id="convert-input" multiple accept="image/jpeg, image/png" onchange="handleFiles(event, 'convert')">
-        </div>
-        <div id="convert-preview" class="preview-box"></div>
-        <div id="convert-status" class="status-message"></div>
-        <button class="btn btn-success" style="width: auto; display:block; margin:0 auto;" onclick="executeConversion()">توليد مستند PDF النهائي</button>
-    </div>
-</div>
-
-<div id="viewer-modal" class="modal">
-    <div class="modal-content">
-        <button class="close-modal" onclick="closeModal('viewer-modal')">×</button>
-        <h2>🔍 قارئ ومشغل الملفات الشامل</h2>
-        <div class="upload-zone" onclick="document.getElementById('viewer-input').click()">
-            <p>اضغط هنا لرفع أي ملف وعرضه وتعديله فوراً</p>
-            <input type="file" id="viewer-input" multiple accept="*/*" onchange="handleFiles(event, 'viewer')">
-        </div>
-        <div id="viewer-preview" class="preview-box"></div>
-    </div>
-</div>
-
-<div id="edit-sub-modal" class="modal" style="z-index: 2000;">
-    <div class="modal-content" style="max-width: 600px;">
-        <button class="close-modal" onclick="closeModal('edit-sub-modal')">×</button>
-        <h2 id="edit-modal-title">⚙️ معاينة وتعديل الملف</h2>
-        <div id="edit-zone-content"></div>
-        <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
-            <button id="rotate-btn" class="btn btn-orange" style="width:auto; display:none;" onclick="rotateCurrentImage()">🔄 تدوير 90 درجة</button>
-            <button class="btn btn-dark" style="width:auto;" onclick="closeModal('edit-sub-modal')">حفظ وإغلاق المعاينة</button>
+    <div id="edit-sub-modal" class="modal">
+        <div class="modal-content" style="max-width: 480px;">
+            <button class="close-modal" onclick="closeModal('edit-sub-modal')">×</button>
+            <h3 id="edit-modal-title" class="lang-text" data-ar="⚙️ ضبط وتدوير الصفحة" data-en="⚙️ Rotate & Tune Page">⚙️ ضبط وتدوير الصفحة</h3>
+            <div id="edit-zone-content"></div>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
+                <button class="btn btn-success" style="width:auto;" onclick="rotateCurrentItem()">
+                    <span class="lang-text" data-ar="🔄 تدوير 90 درجة" data-en="🔄 Rotate 90°">🔄 تدوير 90 درجة</span>
+                </button>
+                <button class="btn btn-secondary" style="width:auto;" onclick="closeModal('edit-sub-modal')">
+                    <span class="lang-text" data-ar="حفظ وإغلاق" data-en="Save & Close">حفظ وإغلاق</span>
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
-</html>
+    </html>
+    
