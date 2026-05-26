@@ -175,7 +175,7 @@ html[dir="ltr"] .badge { right: auto; left: 8px; }
     html[dir="ltr"] .sidebar { transform: translateX(-100%); } /* إخفاء لليسار بالإنجليزية */
     
     .sidebar.open {
-        transform: translateX(0) !important; /* إدخال القائمة عند التفعيل */
+        transform: translateX(0) !important; /* إدخل القائمة عند التفعيل */
     }
     
     .main-content {
@@ -184,4 +184,4 @@ html[dir="ltr"] .badge { right: auto; left: 8px; }
         width: 100%;
         padding: 80px 20px 20px 20px; /* تفادي غطاء زر الهامبرغر */
     }
-    }
+}
