@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GoodTech Advanced Suite</title>
+    <title>GoodTech AI & Document Suite</title>
     
     <link rel="stylesheet" href="styles.css">
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
@@ -20,26 +19,26 @@
     <div class="sidebar" id="sidebar-panel">
         <div>
             <div class="sidebar-brand">
-                <span>⚡ GoodTech Suite</span>
+                <span>⚡ GoodTech AI Suite</span>
             </div>
             <ul class="sidebar-menu">
                 <li class="sidebar-item active" onclick="switchTab('dashboard-tab', this)">
                     <span>🏠</span> <span class="lang-text" data-ar="اللوحة الرئيسية" data-en="Dashboard">اللوحة الرئيسية</span>
                 </li>
+                <li class="sidebar-item" onclick="switchTab('scanner-tab', this)">
+                    <span>📷</span> <span class="lang-text" data-ar="ماسح المستندات الذكي" data-en="AI Document Scanner">ماسح المستندات الذكي</span>
+                </li>
+                <li class="sidebar-item" onclick="switchTab('gemini-tab', this)">
+                    <span>🤖</span> <span class="lang-text" data-ar="مساعد Gemini AI" data-en="Gemini Chat AI">مساعد Gemini AI</span>
+                </li>
                 <li class="sidebar-item" onclick="switchTab('pdf-tab', this)">
                     <span>🔀</span> <span class="lang-text" data-ar="أدوات الـ PDF" data-en="PDF Tools">أدوات الـ PDF</span>
                 </li>
                 <li class="sidebar-item" onclick="switchTab('converter-tab', this)">
-                    <span>🔄</span> <span class="lang-text" data-ar="المحول (PDF/Images)" data-en="Converter (PDF/Images)">المحول (PDF/Images)</span>
-                </li>
-                <li class="sidebar-item" onclick="switchTab('scanner-tab', this)">
-                    <span>📷</span> <span class="lang-text" data-ar="ماسح المستندات" data-en="Document Scanner">ماسح المستندات</span>
+                    <span>🔄</span> <span class="lang-text" data-ar="المحول" data-en="Converter">المحول</span>
                 </li>
                 <li class="sidebar-item" onclick="switchTab('qr-tab', this)">
                     <span>🔍</span> <span class="lang-text" data-ar="أدوات الـ QR Code" data-en="QR Code Tools">أدوات الـ QR Code</span>
-                </li>
-                <li class="sidebar-item" onclick="switchTab('viewer-tab', this)">
-                    <span>👁️</span> <span class="lang-text" data-ar="المعاين الشامل" data-en="Universal Viewer">المعاين الشامل</span>
                 </li>
             </ul>
         </div>
@@ -51,8 +50,15 @@
     <div class="main-content">
         <div class="header-section">
             <div class="header-title">
-                <h1 id="main-title" class="lang-text" data-ar="منصة GoodTech المتقدمة" data-en="GoodTech Advanced Suite">منصة GoodTech المتقدمة</h1>
-                <p id="main-subtitle" class="lang-text" data-ar="الجيل الجديد من أدوات إدارة المستندات والـ QR محلياً بالكامل" data-en="The next-gen offline client for document processing and QR tools.">الجيل الجديد من أدوات إدارة المستندات والـ QR محلياً بالكامل</p>
+                <h1 id="main-title" class="lang-text" data-ar="منصة GoodTech المدعومة بالذكاء الاصطناعي" data-en="GoodTech AI Suite">منصة GoodTech المدعومة بالذكاء الاصطناعي</h1>
+                <p id="main-subtitle" class="lang-text" data-ar="إدارة وتعديل المستندات والتحليل الذكي عبر جيميناي محلياً بالكامل" data-en="Document manipulation and intelligent analysis via Gemini API.">إدارة وتعديل المستندات والتحليل الذكي عبر جيميناي محلياً بالكامل</p>
+            </div>
+        </div>
+
+        <div class="dashboard-card" style="margin-bottom: 24px; background: #fffbeb; border-color: #fef3c7;">
+            <div class="form-group" style="margin-bottom: 0; display: flex; gap: 10px; align-items: center; width: 100%;">
+                <label style="white-space: nowrap; font-weight: bold; color: #b45309;">🔑 Gemini API Key:</label>
+                <input type="password" id="global-api-key" class="form-control" placeholder="أدخل مفتاح Google AI Studio الخاص بك هنا لتفعيل ميزات الذكاء الاصطناعي">
             </div>
         </div>
 
@@ -60,68 +66,19 @@
             <div class="tools-grid">
                 <div class="dashboard-card">
                     <div>
-                        <div class="card-icon">📄</div>
-                        <h3 class="lang-text" data-ar="تعديل وفرز صفحات PDF" data-en="PDF Page Editor & Merger">تعديل وفرز صفحات PDF</h3>
-                        <p class="lang-text" data-ar="فكك مستندات الـ PDF المرفوعة وعاين صفحاتها كصور منفصلة، رتبها بالسحب والإفلات، دور صفحات معينة أو احذفها لبناء ملف جديد كلياً." data-en="Deconstruct PDF files into separate preview pages. Drag to reorder, rotate specific pages, or delete ones you don't need to generate a perfect file.">فكك مستندات الـ PDF المرفوعة وعاين صفحاتها كصور منفصلة، رتبها بالسحب والإفلات، دور صفحات معينة أو احذفها لبناء ملف جديد كلياً.</p>
-                    </div>
-                    <button class="btn" onclick="switchTabByIcon(1)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
-                </div>
-                <div class="dashboard-card">
-                    <div>
                         <div class="card-icon">📷</div>
-                        <h3 class="lang-text" data-ar="ماسح المستندات الضوئي" data-en="Document Scanner">ماسح المستندات الضوئي</h3>
-                        <p class="lang-text" data-ar="استخدم كاميرا جهازك لالتقاط صور الأوراق والوثائق فوراً، وحسّن وضوح النصوص بالفلاتر المتقدمة، وحولها مباشرة إلى مستندات جاهزة للدمج." data-en="Use your camera to snap live document captures, apply clear text enhancement filters, and feed them straight into your document conversion stream.">استخدم كاميرا جهازك لالتقاط صور الأوراق والوثائق فوراً، وحسّن وضوح النصوص بالفلاتر المتقدمة، وحولها مباشرة إلى مستندات جاهزة للدمج.</p>
+                        <h3 class="lang-text" data-ar="ماسح المستندات المدعوم بالـ API" data-en="AI Document Scanner">ماسح المستندات المدعوم بالـ API</h3>
+                        <p class="lang-text" data-ar="التقط صور المستندات وحسّنها، ثم أرسلها مباشرة إلى Gemini لقراءة النصوص (OCR)، استخراج البيانات، أو ترجمتها فوراً." data-en="Scan documents, apply filters, and directly send them to Gemini API for advanced text extraction (OCR), summarization, or translation.">التقط صور المستندات وحسّنها، ثم أرسلها مباشرة إلى Gemini لقراءة النصوص (OCR)، استخراج البيانات، أو ترجمتها فوراً.</p>
                     </div>
-                    <button class="btn btn-secondary" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                    <button class="btn" onclick="switchTabByIcon(1)"><span class="lang-text" data-ar="افتح الماسح الضوئي ←" data-en="Open Scanner ←">افتح الماسح الضوئي ←</span></button>
                 </div>
                 <div class="dashboard-card">
                     <div>
-                        <div class="card-icon">📲</div>
-                        <h3 class="lang-text" data-ar="صانع وقارئ الـ QR Code" data-en="QR Code Scanner & Creator">صانع وقارئ الـ QR Code</h3>
-                        <p class="lang-text" data-ar="أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً." data-en="Generate production-ready QR codes dynamically or use your device camera / image uploads to scan, parse and read any QR code target instantly.">أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً.</p>
+                        <div class="card-icon">🤖</div>
+                        <h3 class="lang-text" data-ar="مساعد محادثة Gemini" data-en="Gemini AI Assistant">مساعد محادثة Gemini</h3>
+                        <p class="lang-text" data-ar="مساعد ذكي متكامل للمحادثة النصية، معالجة النصوص، وحل المشكلات البرمجية أو الكتابية مباشرة." data-en="Full chat assistant powered by Gemini for answering questions, processing texts, and solving complex problems.">مساعد ذكي متكامل للمحادثة النصية، معالجة النصوص، وحل المشكلات البرمجية أو الكتابية مباشرة.</p>
                     </div>
-                    <button class="btn btn-success" onclick="switchTabByIcon(4)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
-                </div>
-            </div>
-        </div>
-
-        <div id="pdf-tab" class="tab-content">
-            <div class="tools-grid">
-                <div class="dashboard-card" style="grid-column: span 2;">
-                    <h2 class="lang-text" data-ar="🔀 تفكيك وتعديل صفحات الـ PDF والدمج" data-en="🔀 Deconstruct, Edit & Merge PDF Pages">🔀 تفكيك وتعديل صفحات الـ PDF والدمج</h2>
-                    <div class="upload-zone" onclick="document.getElementById('merge-input').click()">
-                        <i style="font-size: 2.5rem; margin-bottom: 10px;">📥</i>
-                        <p class="lang-text" data-ar="اسحب وأفلت ملفات الـ PDF هنا أو اضغط للتصفح المتقدم" data-en="Drag & drop PDF documents here or click to browse files">اسحب وأفلت ملفات الـ PDF هنا أو اضغط للتصفح المتقدم</p>
-                        <input type="file" id="merge-input" multiple accept=".pdf" onchange="handlePdfUpload(event)">
-                    </div>
-                    <div id="merge-preview" class="preview-box"></div>
-                    <div id="merge-status" class="status-message"></div>
-                    <button class="btn" style="width:250px; align-self: center;" onclick="executeMerge()">
-                        <span class="lang-text" data-ar="توليد وتحميل الملف النهائي" data-en="Compile & Download New PDF">توليد وتحميل الملف النهائي</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="converter-tab" class="tab-content">
-            <div class="tools-grid">
-                <div class="dashboard-card">
-                    <h3 class="lang-text" data-ar="🖼️ تحويل الصور إلى PDF" data-en="🖼️ Images to PDF">🖼️ تحويل الصور إلى PDF</h3>
-                    <div class="upload-zone" onclick="document.getElementById('img-to-pdf-input').click()">
-                        <p>📤 <span class="lang-text" data-ar="ارفع الصور هنا" data-en="Upload images here">ارفع الصور هنا</span></p>
-                        <input type="file" id="img-to-pdf-input" multiple accept="image/*" onchange="prepareImagesForPdf(event)">
-                    </div>
-                    <div id="img-preview-box" class="preview-box"></div>
-                    <button class="btn" onclick="convertImagesToPdf()">تحويل وتحميل PDF</button>
-                </div>
-
-                <div class="dashboard-card">
-                    <h3 class="lang-text" data-ar="📄 تحويل PDF إلى صور" data-en="📄 PDF to Images">📄 تحويل PDF إلى صور</h3>
-                    <div class="upload-zone" onclick="document.getElementById('pdf-to-img-input').click()">
-                        <p>📥 <span class="lang-text" data-ar="ارفع ملف PDF" data-en="Upload PDF file">ارفع ملف PDF</span></p>
-                        <input type="file" id="pdf-to-img-input" accept=".pdf" onchange="convertPdfToImages(event)">
-                    </div>
-                    <div id="pdf-to-img-results" class="preview-box"></div>
+                    <button class="btn btn-secondary" onclick="switchTabByIcon(2)"><span class="lang-text" data-ar="افتح المساعد الذكي ←" data-en="Open AI Chat ←">افتح المساعد الذكي ←</span></button>
                 </div>
             </div>
         </div>
@@ -129,40 +86,93 @@
         <div id="scanner-tab" class="tab-content">
             <div class="tools-grid">
                 <div class="dashboard-card" style="grid-column: span 2;">
-                    <h2 class="lang-text" data-ar="📸 ماسح المستندات الضوئي الاحترافي" data-en="📸 Professional Document Scanner">📸 ماسح المستندات الضوئي الاحترافي</h2>
+                    <h2 class="lang-text" data-ar="📸 ماسح المستندات الضوئي الذكي (AI Scanner)" data-en="📸 AI Document Scanner">📸 ماسح المستندات الضوئي الذكي (AI Scanner)</h2>
                     <br>
                     <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap: wrap;">
-                        <button class="btn" onclick="startDocCamera()"><span class="lang-text" data-ar="تشغيل الكاميرا" data-en="Start Camera">تشغيل الكاميرا</span></button>
-                        <button class="btn btn-success" onclick="captureDocPage()"><span class="lang-text" data-ar="التقاط الصفحة 📷" data-en="Capture Page 📷">التقاط الصفحة 📷</span></button>
+                        <button class="btn" onclick="startDocCamera()">تشغيل الكاميرا</button>
+                        <button class="btn btn-success" onclick="captureDocPage()">التقاط الصفحة 📷</button>
                         <button class="btn btn-danger" onclick="stopDocCamera()">🛑</button>
                     </div>
                     
                     <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
                         <div style="flex: 1; min-width: 300px;">
-                            <h4 class="lang-text" data-ar="عدسة الكاميرا الحية" data-en="Live Camera Lens">عدسة الكاميرا الحية</h4>
+                            <h4>عدسة الكاميرا</h4>
                             <video id="doc-video" autoplay playsinline style="width: 100%; border-radius: var(--radius); background: #000; margin-top: 10px;"></video>
                         </div>
                         
                         <div style="flex: 1; min-width: 300px;">
-                            <h4 class="lang-text" data-ar="المستند الملتقط الناتح" data-en="Resulting Scanned Document">المستند الملتقط الناتح</h4>
+                            <h4>المستند الملتقط</h4>
                             <canvas id="doc-canvas" style="display: none;"></canvas>
                             <div class="preview-box" id="scanner-preview-container" style="min-height: 240px; display: flex; align-items: center; justify-content: center; background: #e2e8f0; margin-top: 10px;">
-                                <img id="scanned-img-preview" style="max-width: 100%; max-height: 280px; display: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-                                <p id="scanner-placeholder" class="lang-text" data-ar="بانتظار التقاط أول ورقة..." data-en="Waiting for document capture...">بانتظار التقاط أول ورقة...</p>
+                                <img id="scanned-img-preview" style="max-width: 100%; max-height: 280px; display: none; border-radius: 8px;">
+                                <p id="scanner-placeholder">بانتظار التقاط أول ورقة...</p>
                             </div>
                             
                             <div id="scanner-controls" style="margin-top: 15px; display: none; flex-direction: column; gap: 12px;">
                                 <div style="display: flex; gap: 8px; justify-content: center;">
-                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('normal')">الأصل</button>
-                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('grayscale')">رمادي</button>
-                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('threshold')">مسح نصوص (B&W)</button>
+                                    <button class="btn btn-secondary" onclick="applyScanFilter('normal')">الأصل</button>
+                                    <button class="btn btn-secondary" onclick="applyScanFilter('grayscale')">رمادي</button>
+                                    <button class="btn btn-secondary" onclick="applyScanFilter('threshold')">أبيض وأسود عالي التباين</button>
                                 </div>
-                                <button class="btn" style="width: 100%;" onclick="sendScannedToConverter()">
-                                    <span class="lang-text" data-ar="تصدير الصورة إلى محول الـ PDF ➔" data-en="Export Image to PDF Converter ➔">تصدير الصورة إلى محول الـ PDF ➔</span>
-                                </button>
+                                <div style="border-top: 1px solid var(--border); padding-top: 12px; margin-top: 8px;">
+                                    <label style="font-weight: bold; margin-bottom: 6px; display: block;">🤖 إجراءات الذكاء الاصطناعي (Gemini API):</label>
+                                    <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                                        <button class="btn btn-success" style="flex: 1; font-size: 0.85rem;" onclick="analyzeDocumentWithAI('ocr')">استخراج النصوص (OCR)</button>
+                                        <button class="btn btn-success" style="flex: 1; font-size: 0.85rem;" onclick="analyzeDocumentWithAI('summarize')">تلخيص الورقة</button>
+                                    </div>
+                                    <div id="ai-scanner-status" class="status-message" style="color: var(--primary);"></div>
+                                    <textarea id="ai-scanner-result" class="form-control" style="height: 120px; margin-top: 8px; display: none;" placeholder="ستظهر نتائج تحليل الـ API هنا..."></textarea>
+                                </div>
+                                <button class="btn" style="width: 100%; margin-top: 10px;" onclick="sendScannedToConverter()">تصدير الصورة لمحول الـ PDF ➔</button>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="gemini-tab" class="tab-content">
+            <div class="dashboard-card" style="max-width: 800px; margin: auto;">
+                <h3>🤖 مساعد محادثة Gemini AI</h3>
+                <br>
+                <div id="chat-output" class="preview-box" style="height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; background: #f1f5f9; padding: 16px;">
+                    <div style="background: white; padding: 10px 14px; border-radius: 8px; align-self: flex-start; max-width: 80%; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                        مرحباً! أنا مساعدك الذكي المربوط بـ Gemini API. يمكنك سؤالي عن أي شيء أو معالجة نصوصك.
+                    </div>
+                </div>
+                <div class="form-group" style="margin-top: 15px;">
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="gemini-prompt" class="form-control" placeholder="اكتب سؤالك هنا..." onkeypress="if(event.key === 'Enter') askGemini()">
+                        <button class="btn" onclick="askGemini()">إرسال 🚀</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="pdf-tab" class="tab-content">
+            <div class="tools-grid">
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <h2>🔀 تفكيك وتعديل صفحات الـ PDF والدمج</h2>
+                    <div class="upload-zone" onclick="document.getElementById('merge-input').click()">
+                        <p>اسحب وأفلت ملفات الـ PDF هنا أو اضغط للتصفح</p>
+                        <input type="file" id="merge-input" multiple accept=".pdf" onchange="handlePdfUpload(event)">
+                    </div>
+                    <div id="merge-preview" class="preview-box"></div>
+                    <button class="btn" onclick="executeMerge()">توليد وتحميل الملف النهائي</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="converter-tab" class="tab-content">
+            <div class="tools-grid">
+                <div class="dashboard-card">
+                    <h3>🖼️ تحويل الصور إلى PDF</h3>
+                    <div class="upload-zone" onclick="document.getElementById('img-to-pdf-input').click()">
+                        <p>ارفع الصور هنا</p>
+                        <input type="file" id="img-to-pdf-input" multiple accept="image/*" onchange="prepareImagesForPdf(event)">
+                    </div>
+                    <div id="img-preview-box" class="preview-box"></div>
+                    <button class="btn" onclick="convertImagesToPdf()">تحويل وتحميل PDF</button>
                 </div>
             </div>
         </div>
@@ -170,65 +180,25 @@
         <div id="qr-tab" class="tab-content">
             <div class="qr-container">
                 <div class="qr-panel">
-                    <h3 class="lang-text" data-ar="✨ توليد رمز استجابة سريع جديد" data-en="✨ Create New QR Code">✨ توليد رمز استجابة سريع جديد</h3>
-                    <br>
+                    <h3>✨ توليد رمز QR</h3>
                     <div class="form-group">
-                        <label class="lang-text" data-ar="أدخل النص أو الرابط (URL)" data-en="Enter Text or Destination URL">أدخل النص أو الرابط (URL)</label>
-                        <input type="text" id="qr-text-input" class="form-control" placeholder="https://google.com" oninput="generateQRCode()">
+                        <input type="text" id="qr-text-input" class="form-control" placeholder="أدخل النص أو الرابط" oninput="generateQRCode()">
                     </div>
-                    <div id="qr-output-box"></div>
-                    <br>
-                    <button class="btn btn-success" style="width:100%" onclick="downloadQR()">
-                        <span class="lang-text" data-ar="تحميل الرمز كصورة PNG" data-en="Download QR Code Image">تحميل الرمز كصورة PNG</span>
-                    </button>
+                    <div id="qr-output-box" style="text-align: center;"></div>
+                    <button class="btn btn-success" style="width:100%" onclick="downloadQR()">تحميل الرمز كـ PNG</button>
                 </div>
 
                 <div class="qr-panel">
-                    <h3 class="lang-text" data-ar="📷 مسح وقراءة الـ QR Code" data-en="📷 Scan & Parse QR Code">📷 مسح وقراءة الـ QR Code</h3>
-                    <br>
+                    <h3>📷 مسح وقراءة الـ QR Code</h3>
                     <div style="display:flex; gap:10px; margin-bottom:15px;">
-                        <button class="btn" style="flex:1" onclick="startScanner()">
-                            <span class="lang-text" data-ar="تشغيل كاميرا الجهاز" data-en="Initialize Camera">تشغيل كاميرا الجهاز</span>
-                        </button>
+                        <button class="btn" onclick="startScanner()">تشغيل الكاميرا</button>
+                        <button class="btn btn-success" onclick="captureQrSnapshot()">التقاط صورة 📸</button>
                         <button class="btn btn-danger" onclick="stopScanner()">🛑</button>
                     </div>
-                    <div id="reader-video-container"></div>
-                    
-                    <div style="text-align:center; margin:15px 0; font-weight:bold; color:var(--text-muted);" class="lang-text" data-ar="— أو ارفع صورة الرمز من جهازك —" data-en="— OR Upload QR Image From Device —">— أو ارفع صورة الرمز من جهازك —</div>
-                    
-                    <input type="file" id="qr-file-input" accept="image/*" class="form-control" onchange="scanQrFromFile(event)">
-                    <div id="scanner-result" class="status-message" style="margin-top:20px; word-break: break-all; color: var(--success);"></div>
+                    <div id="reader-video-container" style="background: #000; min-height: 200px; border-radius: var(--radius);"></div>
+                    <canvas id="qr-snapshot-canvas" style="display:none;"></canvas>
+                    <div id="scanner-result" class="status-message" style="margin-top:20px; color: var(--success); font-weight: bold;"></div>
                 </div>
-            </div>
-        </div>
-
-        <div id="viewer-tab" class="tab-content">
-            <div class="dashboard-card" style="width:100%;">
-                <h3 class="lang-text" data-ar="👁️ المعاين الذكي الموحد لجميع الملفات" data-en="👁️ Universal Workspace Inspector">👁️ المعاين الذكي الموحد لجميع الملفات</h3>
-                <div class="upload-zone" onclick="document.getElementById('universal-file-input').click()">
-                    <i style="font-size:2.5rem;">🔍</i>
-                    <p class="lang-text" data-ar="قم برفع أي ملف فوراً (PDF, فيديو، ملف صوتي، كود برمي، صورة) لعرض محتواه الفعلي" data-en="Upload any file type (PDF, Video, Audio, Code source, Graphic) to review inline">قم برفع أي ملف فوراً (PDF, فيديو، ملف صوتي، كود برمي، صورة) لعرض محتواه الفعلي</p>
-                    <input type="file" id="universal-file-input" accept="*/*" onchange="handleUniversalViewer(event)">
-                </div>
-                <div class="viewer-stage" id="viewer-stage-area">
-                    <p class="lang-text" data-ar="شاشة العرض فارغة، بانتظار رفع ملف..." data-en="Viewer engine standby. Please upload a target file.">شاشة العرض فارغة، بانتظار رفع ملف...</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="edit-sub-modal" class="modal">
-        <div class="modal-content" style="max-width: 480px;">
-            <button class="close-modal" onclick="closeModal('edit-sub-modal')">×</button>
-            <h3 id="edit-modal-title" class="lang-text" data-ar="⚙️ ضبط وتدوير الصفحة" data-en="⚙️ Rotate & Tune Page">⚙️ ضبط وتدوير الصفحة</h3>
-            <div id="edit-zone-content"></div>
-            <div style="display:flex; gap:10px; justify-content:center; margin-top:20px;">
-                <button class="btn btn-success" style="width:auto;" onclick="rotateCurrentItem()">
-                    <span class="lang-text" data-ar="🔄 تدوير 90 درجة" data-en="🔄 Rotate 90°">🔄 تدوير 90 درجة</span>
-                </button>
-                <button class="btn btn-secondary" style="width:auto;" onclick="closeModal('edit-sub-modal')">
-                    <span class="lang-text" data-ar="حفظ وإغلاق" data-en="Save & Close">حفظ وإغلاق</span>
-                </button>
             </div>
         </div>
     </div>
