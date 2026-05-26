@@ -29,6 +29,9 @@
                 <li class="sidebar-item" onclick="switchTab('pdf-tab', this)">
                     <span>🔀</span> <span class="lang-text" data-ar="أدوات الـ PDF" data-en="PDF Tools">أدوات الـ PDF</span>
                 </li>
+                <li class="sidebar-item" onclick="switchTab('converter-tab', this)">
+                    <span>🔄</span> <span class="lang-text" data-ar="المحول (PDF/Images)" data-en="Converter (PDF/Images)">المحول (PDF/Images)</span>
+                </li>
                 <li class="sidebar-item" onclick="switchTab('qr-tab', this)">
                     <span>🔍</span> <span class="lang-text" data-ar="أدوات الـ QR Code" data-en="QR Code Tools">أدوات الـ QR Code</span>
                 </li>
@@ -66,7 +69,7 @@
                         <h3 class="lang-text" data-ar="صانع وقارئ الـ QR Code" data-en="QR Code Scanner & Creator">صانع وقارئ الـ QR Code</h3>
                         <p class="lang-text" data-ar="أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً." data-en="Generate production-ready QR codes dynamically or use your device camera / image uploads to scan, parse and read any QR code target instantly.">أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً.</p>
                     </div>
-                    <button class="btn btn-success" onclick="switchTabByIcon(2)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                    <button class="btn btn-success" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
                 </div>
                 <div class="dashboard-card">
                     <div>
@@ -74,7 +77,7 @@
                         <h3 class="lang-text" data-ar="المعاين والـ Reader الشامل" data-en="Universal Viewer & Reader">المعاين والـ Reader الشامل</h3>
                         <p class="lang-text" data-ar="منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها." data-en="A centralized inspector workspace that lets you read PDFs inline, stream videos/audio, review source codes and render graphics fully client-side.">منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها.</p>
                     </div>
-                    <button class="btn btn-secondary" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                    <button class="btn btn-secondary" onclick="switchTabByIcon(4)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
                 </div>
             </div>
         </div>
@@ -93,6 +96,31 @@
                     <button class="btn" style="width:250px; align-self: center;" onclick="executeMerge()">
                         <span class="lang-text" data-ar="توليد وتحميل الملف النهائي" data-en="Compile & Download New PDF">توليد وتحميل الملف النهائي</span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="converter-tab" class="tab-content">
+            <div class="tools-grid">
+                <!-- تحويل الصور إلى PDF -->
+                <div class="dashboard-card">
+                    <h3 class="lang-text" data-ar="🖼️ تحويل الصور إلى PDF" data-en="🖼️ Images to PDF">🖼️ تحويل الصور إلى PDF</h3>
+                    <div class="upload-zone" onclick="document.getElementById('img-to-pdf-input').click()">
+                        <p>📤 <span class="lang-text" data-ar="ارفع الصور هنا" data-en="Upload images here">ارفع الصور هنا</span></p>
+                        <input type="file" id="img-to-pdf-input" multiple accept="image/*" onchange="prepareImagesForPdf(event)">
+                    </div>
+                    <div id="img-preview-box" class="preview-box"></div>
+                    <button class="btn" onclick="convertImagesToPdf()">تحويل وتحميل PDF</button>
+                </div>
+
+                <!-- تحويل PDF إلى صور -->
+                <div class="dashboard-card">
+                    <h3 class="lang-text" data-ar="📄 تحويل PDF إلى صور" data-en="📄 PDF to Images">📄 تحويل PDF إلى صور</h3>
+                    <div class="upload-zone" onclick="document.getElementById('pdf-to-img-input').click()">
+                        <p>📥 <span class="lang-text" data-ar="ارفع ملف PDF" data-en="Upload PDF file">ارفع ملف PDF</span></p>
+                        <input type="file" id="pdf-to-img-input" accept=".pdf" onchange="convertPdfToImages(event)">
+                    </div>
+                    <div id="pdf-to-img-results" class="preview-box"></div>
                 </div>
             </div>
         </div>
@@ -165,5 +193,4 @@
 
     <script src="app.js"></script>
 </body>
-    </html>
-    
+</html>
