@@ -5,6 +5,7 @@ let currentLang = 'ar';
 let pdfPagesData = [];
 let currentlyEditingItem = null;
 let html5QrCodeScanner = null;
+let imageToPdfFiles = []; // مصفوفة لتخزين الصور المراد تحويلها إلى PDF
 
 // تفعيل السحب والإفلات لترتيب عناصر الـ PDF
 new Sortable(document.getElementById('merge-preview'), {
@@ -167,6 +168,121 @@ async function executeMerge() {
     } catch (err) {
         status.innerHTML = "❌ Build compiled failed.";
     }
+}
+
+// --- ميزات تبويب المحول الجديد (Converter) ---
+
+// 1. معاينة وتجهيز الصور لتحويلها إلى PDF
+function prepareImagesForPdf(event) {
+    const files = event.target.files;
+    const previewBox = document.getElementById('img-preview-box');
+    previewBox.innerHTML = '';
+    imageToPdfFiles = Array.from(files);
+
+    imageToPdfFiles.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'preview-item';
+            itemDiv.innerHTML = `
+                <div class="media-preview">
+                    <img src="${e.target.result}">
+                </div>
+                <div class="file-name" title="${file.name}">${file.name}</div>
+            `;
+            previewBox.appendChild(itemDiv);
+        }
+        reader.readAsDataURL(file);
+    });
+}
+
+// 2. توليد ملف PDF من الصور المرفوعة
+async function convertImagesToPdf() {
+    if (imageToPdfFiles.length === 0) {
+        alert(currentLang === 'ar' ? "⚠️ الرجاء اختيار صور أولاً!" : "⚠️ Please select images first.");
+        return;
+    }
+
+    try {
+        const { PDFDocument } = PDFLib;
+        const pdfDoc = await PDFDocument.create();
+
+        for (const file of imageToPdfFiles) {
+            const arrayBuffer = await file.arrayBuffer();
+            let embeddedImg;
+
+            if (file.type === 'image/jpeg' || file.type === 'image/jpg') {
+                embeddedImg = await pdfDoc.embedJpg(arrayBuffer);
+            } else if (file.type === 'image/png') {
+                embeddedImg = await pdfDoc.embedPng(arrayBuffer);
+            } else {
+                // محاولة معالجة الصيغ الأخرى كـ JPG افتراضياً
+                try { embeddedImg = await pdfDoc.embedJpg(arrayBuffer); } 
+                catch(e) { embeddedImg = await pdfDoc.embedPng(arrayBuffer); }
+            }
+
+            const page = pdfDoc.addPage([embeddedImg.width, embeddedImg.height]);
+            page.drawImage(embeddedImg, {
+                x: 0, y: 0, width: embeddedImg.width, height: embeddedImg.height
+            });
+        }
+
+        const pdfBytes = await pdfDoc.save();
+        downloadFile(pdfBytes, "GoodTech_Images_Converted.pdf", "application/pdf");
+    } catch (err) {
+        alert("Error converting images to PDF: " + err.message);
+    }
+}
+
+// 3. تحويل ملف PDF واستخراج صفحاته كصور منفصلة قابل للتحميل
+async function convertPdfToImages(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const resultsBox = document.getElementById('pdf-to-img-results');
+    resultsBox.innerHTML = currentLang === 'ar' ? "⏳ جاري تحويل المستند إلى صور..." : "⏳ Converting document to images...";
+
+    try {
+        const arrayBuffer = await file.arrayBuffer();
+        const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        resultsBox.innerHTML = ''; 
+
+        for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
+            const page = await pdfDoc.getPage(pageNum);
+            const viewport = page.getViewport({ scale: 1.5 }); // دقة عالية للعرض والتحميل
+            
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            await page.render({ canvasContext: context, viewport: viewport }).promise;
+            const imgDataUrl = canvas.toDataURL('image/png');
+
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'preview-item';
+            itemDiv.style.height = 'auto';
+            itemDiv.style.padding = '10px';
+
+            itemDiv.innerHTML = `
+                <div class="media-preview" style="height:140px;">
+                    <img src="${imgDataUrl}">
+                </div>
+                <div class="file-name">${currentLang === 'ar' ? 'صفحة' : 'Page'} ${pageNum}</div>
+                <button class="edit-btn" onclick="downloadSingleImage('${imgDataUrl}', 'Page_${pageNum}.png')">📥 ${currentLang === 'ar' ? 'تحميل' : 'Download'}</button>
+            `;
+            resultsBox.appendChild(itemDiv);
+        }
+    } catch (err) {
+        resultsBox.innerHTML = "❌ Failed to convert PDF to images.";
+    }
+}
+
+function downloadSingleImage(dataUrl, filename) {
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = filename;
+    a.click();
 }
 
 // --- محرك الـ QR Code الشامل ---
