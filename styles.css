@@ -1,110 +1,310 @@
 :root {
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
-    --bg-body: #f1f5f9;
+    --bg-body: #f8fafc;
     --bg-card: #ffffff;
-    --text-main: #1e293b;
+    --text-main: #0f172a;
     --text-muted: #64748b;
-    --accent: #8b5cf6;
+    --accent: #7c3aed;
     --border: #e2e8f0;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --radius: 12px;
+    --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+    --radius: 16px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', -apple-system, sans-serif; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; 
+}
 
-body { background-color: var(--bg-body); color: var(--text-main); line-height: 1.6; }
+body { 
+    background-color: var(--bg-body); 
+    color: var(--text-main); 
+    line-height: 1.6; 
+}
 
-/* الهيدر العلوي */
+/* الشريطة العلوية للمنصة */
 .app-header {
     background: var(--bg-card);
-    padding: 1rem 2rem;
+    padding: 1.25rem 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid var(--border);
 }
 
-.header-brand { font-weight: 800; font-size: 1.5rem; color: var(--primary); }
-.api-key-wrapper { display: flex; align-items: center; background: #f8fafc; padding: 5px 12px; border-radius: 8px; border: 1px solid var(--border); }
-.api-key-wrapper input { border: none; background: transparent; outline: none; margin-left: 8px; width: 140px; font-size: 0.8rem; }
+.header-brand { 
+    font-weight: 800; 
+    font-size: 1.4rem; 
+    letter-spacing: -0.5px;
+    color: var(--text-main); 
+}
 
-/* شريط التنقل */
+.api-key-wrapper { 
+    display: flex; 
+    align-items: center; 
+    background: #f1f5f9; 
+    padding: 6px 14px; 
+    border-radius: 30px; 
+    border: 1px solid var(--border); 
+}
+
+.api-key-wrapper input { 
+    border: none; 
+    background: transparent; 
+    outline: none; 
+    margin-right: 8px; 
+    width: 160px; 
+    font-size: 0.85rem; 
+    color: var(--text-main);
+}
+
+.lang-switcher {
+    background: transparent;
+    border: 1px solid var(--border);
+    padding: 6px 14px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+/* شريط التبويبات العالمي الحديث */
 .app-nav {
     background: var(--bg-card);
     display: flex;
     justify-content: center;
-    gap: 10px;
-    padding: 0.5rem;
+    gap: 8px;
+    padding: 0.75rem;
     border-bottom: 1px solid var(--border);
 }
 
 .nav-link {
-    padding: 10px 20px;
+    padding: 10px 24px;
     border: none;
     background: transparent;
     cursor: pointer;
     font-weight: 600;
+    font-size: 0.95rem;
     color: var(--text-muted);
     border-radius: var(--radius);
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
-.nav-link.active { background: #eff6ff; color: var(--primary); }
-.nav-link:hover { color: var(--primary); }
+.nav-link.active { 
+    background: #eff6ff; 
+    color: var(--primary); 
+}
 
-/* المحتوى الرئيسي */
-.main-content { padding: 2rem; max-width: 1200px; margin: 0 auto; }
-.tab-content { display: none; }
-.tab-content.active { display: block; animation: fadeIn 0.3s; }
+.nav-link:hover { 
+    color: var(--primary); 
+    background: #f1f5f9;
+}
 
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+/* الحاوية والمحتوى */
+.main-content { 
+    padding: 2.5rem; 
+    max-width: 1300px; 
+    margin: 0 auto; 
+}
 
-/* البطاقات (Cards) */
+.tab-content { 
+    display: none; 
+}
+
+.tab-content.active { 
+    display: block; 
+    animation: slideUp 0.4s ease-out; 
+}
+
+@keyframes slideUp { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* بطاقات مساحات العمل */
 .workspace-card {
     background: var(--bg-card);
-    padding: 2rem;
+    padding: 2.5rem;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     border: 1px solid var(--border);
+    margin-bottom: 2rem;
 }
 
-.tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+.welcome-banner {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding: 3rem;
+    background: linear-gradient(135deg, #e0e7ff 0%, #eff6ff 100%);
+    border-radius: var(--radius);
+}
+
+.welcome-banner h1 { font-size: 2.2rem; margin-bottom: 0.5rem; color: #1e3a8a; }
+.welcome-banner p { color: #1e40af; font-size: 1.1rem; }
+
+.tools-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 1.5rem; 
+}
+
 .tool-card {
     background: var(--bg-card);
-    padding: 1.5rem;
+    padding: 2rem;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.tool-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
-.card-icon { font-size: 2rem; margin-bottom: 1rem; }
 
-/* عناصر التصميم المتقدمة */
+.tool-card:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.05);
+    border-color: var(--primary);
+}
+
+.card-icon { font-size: 2.5rem; margin-bottom: 1.25rem; }
+.tool-card h3 { margin-bottom: 0.5rem; font-size: 1.2rem; }
+.tool-card p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* أزرار الإجراءات */
+.action-bar { display: flex; gap: 10px; margin-bottom: 1.5rem; }
 .btn {
-    padding: 10px 20px;
+    padding: 12px 24px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    transition: 0.2s;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 .btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-hover); }
+.btn-accent { background: var(--text-main); color: white; }
 .btn-ai { background: var(--accent); color: white; }
-.btn-success { background: #22c55e; color: white; }
+.btn-success { background: #10b981; color: white; }
 .btn-danger { background: #ef4444; color: white; }
+.btn-secondary { background: #f1f5f9; color: var(--text-main); border: 1px solid var(--border); }
+.btn-secondary:hover { background: #e2e8f0; }
 
-/* الماسح الضوئي */
-.scanner-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.5rem; }
-.video-panel video { width: 100%; border-radius: var(--radius); background: #000; }
-.display-box { height: 300px; background: #e2e8f0; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; }
+/* تخطيط الماسح الضوئي الاحترافي (CamScanner Layout) */
+.scanner-layout { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2.5rem; 
+    margin-top: 2rem; 
+}
 
-/* الـ QR Code */
-.qr-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.video-panel video { 
+    width: 100%; 
+    border-radius: var(--radius); 
+    background: #090d16; 
+    box-shadow: var(--shadow);
+}
 
-/*Responsive*/
-@media (max-width: 768px) {
+.display-box { 
+    height: 400px; 
+    background: #f1f5f9; 
+    border: 2px dashed var(--border);
+    border-radius: var(--radius); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    color: var(--text-muted);
+}
+
+/* === النظام السحري للقص (Crop Mechanics UI) === */
+.crop-container {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.crop-container img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    opacity: 0.75; /* تعتيم الصورة قليلاً لتبرز منطقة التحديد */
+}
+
+/* نقاط التحكم الدائرية الأربعة للسحب والتعديل الهندي */
+.crop-handle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-color: var(--primary);
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    cursor: move;
+    z-index: 10;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    transform: translate(-12px, -12px); /* لتتمركز النقطة تماماً فوق الزاوية */
+    transition: background-color 0.1s, transform 0.1s;
+}
+
+.crop-handle:active {
+    background-color: var(--accent);
+    transform: translate(-12px, -12px) scale(1.2);
+}
+
+/* منطقة الفلاتر والذكاء الاصطناعي */
+.filter-buttons { display: flex; gap: 8px; margin-top: 15px; }
+.filter-buttons .btn { flex: 1; padding: 8px 12px; font-size: 0.85rem; }
+
+.ai-direct-zone {
+    margin-top: 20px;
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+.ai-direct-zone .btn-ai { width: 49%; margin-bottom: 10px; }
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    font-size: 0.95rem;
+    margin-top: 10px;
+    resize: vertical;
+}
+
+/* تبويب الـ QR والـ Dropzones */
+.drop-zone {
+    border: 3px dashed var(--border);
+    padding: 3rem;
+    text-align: center;
+    border-radius: var(--radius);
+    cursor: pointer;
+    background: #f8fafc;
+    transition: 0.2s;
+    margin-bottom: 1.5rem;
+}
+.drop-zone:hover { background: #f0fdf4; border-color: #10b981; }
+
+.grid-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.preview-item { width: 80px; height: 100px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); background: #000; }
+.preview-item img { width: 100%; height: 100%; object-fit: cover; }
+
+.qr-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+#reader-video-container { width: 100%; border-radius: var(--radius); overflow: hidden; background: #000; }
+#qr-output-box { margin-top: 20px; display: flex; justify-content: center; }
+
+.status-msg { margin-top: 10px; font-size: 0.9rem; font-weight: 600; color: var(--primary); }
+
+/* الشاشات الصغيرة والهواتف */
+@media (max-width: 912px) {
     .scanner-layout, .qr-layout { grid-template-columns: 1fr; }
-    .app-nav { flex-direction: column; align-items: center; }
+    .app-nav { flex-wrap: wrap; }
+    .main-content { padding: 1rem; }
 }
