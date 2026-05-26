@@ -3,19 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Universal Document Suite</title>
+    <title>Universal Document Suite & CamScanner AI</title>
     
+    <!-- ملف التنسيقات الخارجي -->
     <link rel="stylesheet" href="styles.css">
 
+    <!-- المكتبات الأساسية السحابية عبر الـ CDN -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script src="https://unpkg.com/html5-qrcode"></script>
+    
+    <!-- مكتبة OpenCV.js لمعالجة الصور وتصحيح المنظور هندسياً كمحرك أساسي للـ CamScanner -->
+    <script async src="https://cdn.jsdelivr.net/npm/@techstark/opencv-js@4.6.0-release.2/dist/opencv.js" type="text/javascript"></script>
 </head>
 <body>
 
+    <!-- شريط التنقل العلوي الاحترافي -->
     <header class="app-header">
-        <div class="header-brand">⚡ Universal Suite</div>
+        <div class="header-brand">⚡ Universal Suite <span style="font-size: 0.8rem; font-weight: normal; color: var(--accent);">PRO</span></div>
         <div class="header-actions">
             <div class="api-key-wrapper">
                 <span class="key-icon">🔑</span>
@@ -25,9 +31,10 @@
         </div>
     </header>
 
+    <!-- شريط التنقل بين التبويبات بدون تشتيت -->
     <nav class="app-nav">
         <button class="nav-link active" onclick="switchTab('dashboard-tab', this)">🏠 الرئيسية</button>
-        <button class="nav-link" onclick="switchTab('scanner-tab', this)">📷 الماسح الضوئي الذكي</button>
+        <button class="nav-link" onclick="switchTab('scanner-tab', this)">📷 ماسح CamScanner</button>
         <button class="nav-link" onclick="switchTab('pdf-tab', this)">🔀 أدوات PDF</button>
         <button class="nav-link" onclick="switchTab('converter-tab', this)">🖼️ محول الصور</button>
         <button class="nav-link" onclick="switchTab('qr-tab', this)">🔍 رموز QR</button>
@@ -35,85 +42,107 @@
 
     <main class="main-content">
 
+        <!-- 1. اللوحة الرئيسية (Dashboard) -->
         <div id="dashboard-tab" class="tab-content active">
             <div class="welcome-banner">
-                <h1 class="lang-text" data-ar="منصة المعالجة الشاملة" data-en="Universal Processing Hub">منصة المعالجة الشاملة</h1>
-                <p class="lang-text" data-ar="أدوات متكاملة لإدارة وتعديل المستندات، الصور، ورموز الاستجابة السريعة محلياً وبشكل فوري." data-en="Integrated tools for managing and editing documents, images, and QR codes locally and instantly.">أدوات متكاملة لإدارة وتعديل المستندات، الصور، ورموز الاستجابة السريعة محلياً وبشكل فوري.</p>
+                <h1 class="lang-text" data-ar="منصة المعالجة الاحترافية الموحدة" data-en="Universal Processing Hub PRO">منصة المعالجة الاحترافية الموحدة</h1>
+                <p class="lang-text" data-ar="نظام مسح ضوئي متكامل يحاكي تطبيقات الهواتف الذكية لتصحيح زوايا المستندات واستخراج نصوصها عبر جيميناي محلياً." data-en="Integrated scanning system mimicking smartphone apps to correct document perspectives and extract text via Gemini API locally.">نظام مسح ضوئي متكامل يحاكي تطبيقات الهواتف الذكية لتصحيح زوايا المستندات واستخراج نصوصها عبر جيميناي محلياً.</p>
             </div>
             
             <div class="tools-grid">
                 <div class="tool-card" onclick="switchTabByIcon(1)">
                     <div class="card-icon">📸</div>
-                    <h3 class="lang-text" data-ar="ماسح المستندات (OCR)" data-en="Document Scanner (OCR)">ماسح المستندات (OCR)</h3>
-                    <p class="lang-text" data-ar="تحويل الصور الملتقطة إلى نصوص رقمية وملخصات عبر الذكاء الاصطناعي الفوري." data-en="Convert captured images into digital text and summaries via instant AI.">تحويل الصور الملتقطة إلى نصوص رقمية وملخصات عبر الذكاء الاصطناعي الفوري.</p>
+                    <h3 class="lang-text" data-ar="ماسح المستندات الذكي (CamScanner Mode)" data-en="Smart Document Scanner (CamScanner Mode)">ماسح المستندات الذكي (CamScanner Mode)</h3>
+                    <p class="lang-text" data-ar="التقط المستندات، قم بضبط الزوايا الأربع يدوياً لتسوية الصورة، ثم استخرج النصوص فوراً عبر الـ API." data-en="Capture docs, manually adjust four corners to flatten the image, and instantly extract text via API.">التقط المستندات، قم بضبط الزوايا الأربع يدوياً لتسوية الصورة، ثم استخرج النصوص فوراً عبر الـ API.</p>
                 </div>
                 <div class="tool-card" onclick="switchTabByIcon(2)">
                     <div class="card-icon">🔀</div>
-                    <h3 class="lang-text" data-ar="دمج وتفكيك PDF" data-en="Merge & Split PDF">دمج وتفكيك PDF</h3>
-                    <p class="lang-text" data-ar="إعادة ترتيب الصفحات، استخراجها، أو دمج عدة ملفات في ملف واحد." data-en="Reorder pages, extract them, or merge multiple files into one.">إعادة ترتيب الصفحات، استخراجها، أو دمج عدة ملفات في ملف واحد.</p>
+                    <h3 class="lang-text" data-ar="إدارة ودمج ملفات PDF" data-en="Merge & Split PDF">إدارة ودمج ملفات PDF</h3>
+                    <p class="lang-text" data-ar="إعادة ترتيب الصفحات بسلاسة، تفكيك الملفات أو تجميعها في مستند واحد عالي الجودة." data-en="Seamlessly reorder pages, split files, or compile them into a single high-quality document.">إعادة ترتيب الصفحات بسلاسة، تفكيك الملفات أو تجميعها في مستند واحد عالي الجودة.</p>
                 </div>
                 <div class="tool-card" onclick="switchTabByIcon(3)">
                     <div class="card-icon">🔄</div>
                     <h3 class="lang-text" data-ar="تحويل الصور إلى PDF" data-en="Images to PDF">تحويل الصور إلى PDF</h3>
-                    <p class="lang-text" data-ar="تجميع الصور الفوتوغرافية أو الممسوحة وتصديرها كملف PDF منظم." data-en="Compile photographic or scanned images and export them as an organized PDF.">تجميع الصور الفوتوغرافية أو الممسوحة وتصديرها كملف PDF منظم.</p>
+                    <p class="lang-text" data-ar="تجميع الصور وتصديرها كملف PDF منظم." data-en="Compile images and export them as an organized PDF document.">تجميع الصور وتصديرها كملف PDF منظم.</p>
                 </div>
                 <div class="tool-card" onclick="switchTabByIcon(4)">
                     <div class="card-icon">🔍</div>
-                    <h3 class="lang-text" data-ar="توليد ومسح QR Code" data-en="QR Code Generator & Scanner">توليد ومسح QR Code</h3>
-                    <p class="lang-text" data-ar="صناعة رموز مخصصة أو قراءتها فورياً من الكاميرا أو الصور الثابتة." data-en="Create custom codes or read them instantly from camera or snapshots.">صناعة رموز مخصصة أو قراءتها فورياً من الكاميرا أو الصور الثابتة.</p>
+                    <h3 class="lang-text" data-ar="توليد وقراءة الـ QR Code" data-en="QR Code Hub">توليد وقراءة الـ QR Code</h3>
+                    <p class="lang-text" data-ar="صناعة رموز مخصصة أو قراءتها فورياً من الكاميرا الحية واللقطات الثابتة." data-en="Generate custom codes or scan them instantly from live feed or snapshots.">صناعة رموز مخصصة أو قراءتها فورياً من الكاميرا الحية واللقطات الثابتة.</p>
                 </div>
             </div>
         </div>
 
+        <!-- 2. تبويب ماسح المستندات المطور بنظام الـ Cropping الهندسي والزوايا الأربع -->
         <div id="scanner-tab" class="tab-content">
             <div class="workspace-card">
-                <h2 class="lang-text" data-ar="📷 ماسح المستندات عالي الدقة" data-en="📷 High-Res Document Scanner">📷 ماسح المستندات عالي الدقة</h2>
+                <h2 class="lang-text" data-ar="📷 ماسح المستندات وتصحيح المنظور الهندسي" data-en="📷 CamScanner Perspective Suite">📷 ماسح المستندات وتصحيح المنظور الهندسي</h2>
+                
                 <div class="action-bar">
                     <button class="btn btn-primary" onclick="startDocCamera()">تشغيل الكاميرا</button>
                     <button class="btn btn-success" onclick="captureDocPage()">التقاط المستند 📸</button>
-                    <button class="btn btn-danger" onclick="stopDocCamera()">إيقاف</button>
+                    <button class="btn btn-danger" onclick="stopDocCamera()">إيقاف البث</button>
                 </div>
                 
                 <div class="scanner-layout">
+                    <!-- لوحة الكاميرا الحية -->
                     <div class="video-panel">
-                        <h4>البث المباشر</h4>
+                        <h4 class="lang-text" data-ar="عدسة الكاميرا المباشرة" data-en="Live Feed Camera">عدسة الكاميرا المباشرة</h4>
                         <video id="doc-video" autoplay playsinline></video>
                     </div>
                     
+                    <!-- لوحة المعالجة والقص الذكي والمتقدم -->
                     <div class="preview-panel">
-                        <h4>المستند الرقمي</h4>
-                        <canvas id="doc-canvas" style="display: none;"></canvas>
-                        <div class="display-box" id="scanner-preview-container">
-                            <img id="scanned-img-preview" style="display: none;">
-                            <p id="scanner-placeholder">بانتظار التقاط المستند...</p>
+                        <h4 class="lang-text" data-ar="منطقة التحكم السحري والقص الرقمي" data-en="Interactive Interactive Crop Stage">منطقة التحكم السحري والقص الرقمي</h4>
+                        
+                        <!-- حاوية تفاعلية تظهر فوقها نقاط السحب الأربعة للتحكم بالزوايا -->
+                        <div id="crop-wrapper" class="crop-container" style="display: none;">
+                            <img id="scanned-img-preview" alt="Captured document">
+                            <!-- النقاط التفاعلية الأربعة لقص الزوايا -->
+                            <div class="crop-handle" id="handle-tl"></div>
+                            <div class="crop-handle" id="handle-tr"></div>
+                            <div class="crop-handle" id="handle-bl"></div>
+                            <div class="crop-handle" id="handle-br"></div>
                         </div>
                         
-                        <div id="scanner-controls" style="display: none;">
-                            <div class="filter-buttons">
+                        <div class="display-box" id="scanner-placeholder-box">
+                            <p id="scanner-placeholder">بانتظار التقاط الصورة لبدء هندسة الورقة...</p>
+                        </div>
+
+                        <!-- الكانفاس المخفي والمستخدم للمعالجة الرياضية وتطبيق الفلاتر -->
+                        <canvas id="doc-canvas" style="display: none;"></canvas>
+                        <canvas id="transformed-canvas" style="display: none;"></canvas>
+
+                        <!-- لوحة التحكم بالفلاتر وإجراءات الذكاء الاصطناعي بعد الالتقاط -->
+                        <div id="scanner-controls" style="display: none; margin-top: 20px;">
+                            <button class="btn btn-accent" style="width: 100%; margin-bottom: 15px; font-size: 1.1rem;" onclick="processPerspectiveWarp()">📐 تطبيق قص وتصحيح زوايا المستند</button>
+                            
+                            <div class="filter-buttons" style="margin-bottom: 15px;">
                                 <button class="btn btn-secondary" onclick="applyScanFilter('normal')">الأصل</button>
-                                <button class="btn btn-secondary" onclick="applyScanFilter('grayscale')">مستند رمادي</button>
-                                <button class="btn btn-secondary" onclick="applyScanFilter('threshold')">أبيض وأسود (ممسوح)</button>
+                                <button class="btn btn-secondary" onclick="applyScanFilter('grayscale')">ألوان رمادية</button>
+                                <button class="btn btn-secondary" onclick="applyScanFilter('threshold')">تصفية ممسوحة (B&W)</button>
                             </div>
                             
                             <div class="ai-direct-zone">
-                                <button class="btn btn-ai" onclick="analyzeDocumentWithAI('ocr')">🔮 استخراج النصوص فوراً (OCR)</button>
+                                <button class="btn btn-ai" onclick="analyzeDocumentWithAI('ocr')">🔮 استخراج النصوص الفوري (OCR)</button>
                                 <button class="btn btn-ai" onclick="analyzeDocumentWithAI('summarize')">📝 تلخيص المستند</button>
                                 <div id="ai-scanner-status" class="status-msg"></div>
-                                <textarea id="ai-scanner-result" class="form-control" style="display: none;" placeholder="ستظهر البيانات المستخرجة هنا..."></textarea>
+                                <textarea id="ai-scanner-result" class="form-control" style="display: none;" placeholder="ستظهر نصوص الـ API المستخرجة هنا..."></textarea>
                             </div>
                             
-                            <button class="btn btn-forward" onclick="sendScannedToConverter()">تصدير إلى محول PDF ➔</button>
+                            <button class="btn btn-forward" style="width: 100%; margin-top: 15px;" onclick="sendScannedToConverter()">تصدير المستند المفرز إلى محول PDF ➔</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- 3. تبويب أدوات الـ PDF -->
         <div id="pdf-tab" class="tab-content">
             <div class="workspace-card">
-                <h2>🔀 مدير ملفات وصور الـ PDF</h2>
+                <h2>🔀 تعديل ودمج صفحات مستندات الـ PDF</h2>
                 <div class="drop-zone" onclick="document.getElementById('merge-input').click()">
-                    <p>اسحب ملفات الـ PDF وأفلتها هنا أو اضغط للتصفح</p>
+                    <p>اسحب ملفات الـ PDF وأفلتها هنا أو اضغط للتصفح السريع</p>
                     <input type="file" id="merge-input" multiple accept=".pdf" onchange="handlePdfUpload(event)">
                 </div>
                 <div id="merge-preview" class="grid-preview"></div>
@@ -121,11 +150,12 @@
             </div>
         </div>
 
+        <!-- 4. تبويب محول الصور -->
         <div id="converter-tab" class="tab-content">
             <div class="workspace-card">
-                <h2>🖼️ تحويل باقة صور إلى مستند PDF واحد</h2>
+                <h2>🖼️ تحويل مجموعة صور إلى مستند PDF واحد</h2>
                 <div class="drop-zone" onclick="document.getElementById('img-to-pdf-input').click()">
-                    <p>ارفع أو اسحب مجموعة الصور هنا</p>
+                    <p>ارفع أو اسحب باقة الصور هنا لتضمينها</p>
                     <input type="file" id="img-to-pdf-input" multiple accept="image/*" onchange="prepareImagesForPdf(event)">
                 </div>
                 <div id="img-preview-box" class="grid-preview"></div>
@@ -133,22 +163,23 @@
             </div>
         </div>
 
+        <!-- 5. تبويب الـ QR Code العالمي -->
         <div id="qr-tab" class="tab-content">
             <div class="qr-layout">
                 <div class="workspace-card">
-                    <h3>✨ صناعة رمز QR</h3>
+                    <h3>✨ توليد وصناعة رمز QR مخصص</h3>
                     <div class="form-group">
-                        <input type="text" id="qr-text-input" class="form-control" placeholder="اكتب الرابط أو النص هنا..." oninput="generateQRCode()">
+                        <input type="text" id="qr-text-input" class="form-control" placeholder="اكتب الرابط أو النص هنا لتوليد شفرتك..." oninput="generateQRCode()">
                     </div>
                     <div id="qr-output-box"></div>
                     <button class="btn btn-success" style="width: 100%; margin-top: 15px;" onclick="downloadQR()">حفظ الرمز كـ PNG</button>
                 </div>
 
                 <div class="workspace-card">
-                    <h3>📷 قارئ الرموز والمستندات السريع</h3>
+                    <h3>📷 ماسح الرموز واللقطات السريع</h3>
                     <div class="action-bar" style="margin-bottom: 15px;">
                         <button class="btn btn-primary" onclick="startScanner()">تشغيل العدسة</button>
-                        <button class="btn btn-success" onclick="captureQrSnapshot()">التقاط صورة 📸</button>
+                        <button class="btn btn-success" onclick="captureQrSnapshot()">التقاط لقطة شاشة وتحليلها 📸</button>
                         <button class="btn btn-danger" onclick="stopScanner()">إيقاف</button>
                     </div>
                     <div id="reader-video-container"></div>
