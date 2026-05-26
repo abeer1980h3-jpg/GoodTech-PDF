@@ -32,6 +32,9 @@
                 <li class="sidebar-item" onclick="switchTab('converter-tab', this)">
                     <span>🔄</span> <span class="lang-text" data-ar="المحول (PDF/Images)" data-en="Converter (PDF/Images)">المحول (PDF/Images)</span>
                 </li>
+                <li class="sidebar-item" onclick="switchTab('scanner-tab', this)">
+                    <span>📷</span> <span class="lang-text" data-ar="ماسح المستندات" data-en="Document Scanner">ماسح المستندات</span>
+                </li>
                 <li class="sidebar-item" onclick="switchTab('qr-tab', this)">
                     <span>🔍</span> <span class="lang-text" data-ar="أدوات الـ QR Code" data-en="QR Code Tools">أدوات الـ QR Code</span>
                 </li>
@@ -65,19 +68,19 @@
                 </div>
                 <div class="dashboard-card">
                     <div>
+                        <div class="card-icon">📷</div>
+                        <h3 class="lang-text" data-ar="ماسح المستندات الضوئي" data-en="Document Scanner">ماسح المستندات الضوئي</h3>
+                        <p class="lang-text" data-ar="استخدم كاميرا جهازك لالتقاط صور الأوراق والوثائق فوراً، وحسّن وضوح النصوص بالفلاتر المتقدمة، وحولها مباشرة إلى مستندات جاهزة للدمج." data-en="Use your camera to snap live document captures, apply clear text enhancement filters, and feed them straight into your document conversion stream.">استخدم كاميرا جهازك لالتقاط صور الأوراق والوثائق فوراً، وحسّن وضوح النصوص بالفلاتر المتقدمة، وحولها مباشرة إلى مستندات جاهزة للدمج.</p>
+                    </div>
+                    <button class="btn btn-secondary" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                </div>
+                <div class="dashboard-card">
+                    <div>
                         <div class="card-icon">📲</div>
                         <h3 class="lang-text" data-ar="صانع وقارئ الـ QR Code" data-en="QR Code Scanner & Creator">صانع وقارئ الـ QR Code</h3>
                         <p class="lang-text" data-ar="أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً." data-en="Generate production-ready QR codes dynamically or use your device camera / image uploads to scan, parse and read any QR code target instantly.">أنشئ رموز استجابة سريعة فورية مخصصة وحملها كـ PNG، أو استخدم كاميرا جهازك والملفات لقراءة ومسح أي رمز QR وفك تشفيره فوراً.</p>
                     </div>
-                    <button class="btn btn-success" onclick="switchTabByIcon(3)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
-                </div>
-                <div class="dashboard-card">
-                    <div>
-                        <div class="card-icon">👁️</div>
-                        <h3 class="lang-text" data-ar="المعاين والـ Reader الشامل" data-en="Universal Viewer & Reader">المعاين والـ Reader الشامل</h3>
-                        <p class="lang-text" data-ar="منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها." data-en="A centralized inspector workspace that lets you read PDFs inline, stream videos/audio, review source codes and render graphics fully client-side.">منصة فحص فورية متقدمة تدعم تشغيل الفيديوهات، معاينة الصور، قراءة ملفات الـ PDF بشكل مريح، ومراجعة النصوص البرمجية بمختلف أنواعها.</p>
-                    </div>
-                    <button class="btn btn-secondary" onclick="switchTabByIcon(4)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
+                    <button class="btn btn-success" onclick="switchTabByIcon(4)"><span class="lang-text" data-ar="ابدأ العمل الآن ←" data-en="Launch Tool ←">ابدأ العمل الآن ←</span></button>
                 </div>
             </div>
         </div>
@@ -102,7 +105,6 @@
 
         <div id="converter-tab" class="tab-content">
             <div class="tools-grid">
-                <!-- تحويل الصور إلى PDF -->
                 <div class="dashboard-card">
                     <h3 class="lang-text" data-ar="🖼️ تحويل الصور إلى PDF" data-en="🖼️ Images to PDF">🖼️ تحويل الصور إلى PDF</h3>
                     <div class="upload-zone" onclick="document.getElementById('img-to-pdf-input').click()">
@@ -113,7 +115,6 @@
                     <button class="btn" onclick="convertImagesToPdf()">تحويل وتحميل PDF</button>
                 </div>
 
-                <!-- تحويل PDF إلى صور -->
                 <div class="dashboard-card">
                     <h3 class="lang-text" data-ar="📄 تحويل PDF إلى صور" data-en="📄 PDF to Images">📄 تحويل PDF إلى صور</h3>
                     <div class="upload-zone" onclick="document.getElementById('pdf-to-img-input').click()">
@@ -121,6 +122,47 @@
                         <input type="file" id="pdf-to-img-input" accept=".pdf" onchange="convertPdfToImages(event)">
                     </div>
                     <div id="pdf-to-img-results" class="preview-box"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="scanner-tab" class="tab-content">
+            <div class="tools-grid">
+                <div class="dashboard-card" style="grid-column: span 2;">
+                    <h2 class="lang-text" data-ar="📸 ماسح المستندات الضوئي الاحترافي" data-en="📸 Professional Document Scanner">📸 ماسح المستندات الضوئي الاحترافي</h2>
+                    <br>
+                    <div style="display:flex; gap:10px; margin-bottom:15px; flex-wrap: wrap;">
+                        <button class="btn" onclick="startDocCamera()"><span class="lang-text" data-ar="تشغيل الكاميرا" data-en="Start Camera">تشغيل الكاميرا</span></button>
+                        <button class="btn btn-success" onclick="captureDocPage()"><span class="lang-text" data-ar="التقاط الصفحة 📷" data-en="Capture Page 📷">التقاط الصفحة 📷</span></button>
+                        <button class="btn btn-danger" onclick="stopDocCamera()">🛑</button>
+                    </div>
+                    
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 class="lang-text" data-ar="عدسة الكاميرا الحية" data-en="Live Camera Lens">عدسة الكاميرا الحية</h4>
+                            <video id="doc-video" autoplay playsinline style="width: 100%; border-radius: var(--radius); background: #000; margin-top: 10px;"></video>
+                        </div>
+                        
+                        <div style="flex: 1; min-width: 300px;">
+                            <h4 class="lang-text" data-ar="المستند الملتقط الناتح" data-en="Resulting Scanned Document">المستند الملتقط الناتح</h4>
+                            <canvas id="doc-canvas" style="display: none;"></canvas>
+                            <div class="preview-box" id="scanner-preview-container" style="min-height: 240px; display: flex; align-items: center; justify-content: center; background: #e2e8f0; margin-top: 10px;">
+                                <img id="scanned-img-preview" style="max-width: 100%; max-height: 280px; display: none; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <p id="scanner-placeholder" class="lang-text" data-ar="بانتظار التقاط أول ورقة..." data-en="Waiting for document capture...">بانتظار التقاط أول ورقة...</p>
+                            </div>
+                            
+                            <div id="scanner-controls" style="margin-top: 15px; display: none; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; gap: 8px; justify-content: center;">
+                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('normal')">الأصل</button>
+                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('grayscale')">رمادي</button>
+                                    <button class="btn btn-secondary" style="padding:8px 16px;" onclick="applyScanFilter('threshold')">مسح نصوص (B&W)</button>
+                                </div>
+                                <button class="btn" style="width: 100%;" onclick="sendScannedToConverter()">
+                                    <span class="lang-text" data-ar="تصدير الصورة إلى محول الـ PDF ➔" data-en="Export Image to PDF Converter ➔">تصدير الصورة إلى محول الـ PDF ➔</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
